@@ -5,6 +5,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -54,5 +55,14 @@ class RestaurantTest {
     public void removing_item_that_does_not_exist_should_throw_exception() {
         assertThrows(itemNotFoundException.class,
                 () -> restaurant.removeFromMenu("French fries"));
+    }
+
+    @Test void given_list_of_items_total_should_be_returned() {
+        final int price1 = 100;
+        final int price2 = 50;
+        restaurant.addToMenu("Fried rice",price1);
+        restaurant.addToMenu("Ice cream", price2);
+        List<String> itemsToPass = List.of("Fried rice", "Ice cream");
+        assertEquals(price1 + price2, restaurant.getTotal(itemsToPass));
     }
 }
